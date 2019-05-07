@@ -1,23 +1,26 @@
 package com.sommerfeld.gymnote;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
-
+public class aWorkout extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.newevent);
+
+
 
         //Set up variables
         BottomNavigationView bnw = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
 
 
+        bnw.setSelectedItemId(R.id.ic_workout);
         //Set OnClickListener to bottom toolbar
         //This will switch the clicked menu item and then will intent the respective activity
         bnw.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -26,15 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
                 switch(menuItem.getItemId()) {
                     case R.id.ic_new_plan:
-                        Intent intent_newPlan = new Intent(MainActivity.this, aPlan.class);
+                        Intent intent_newPlan = new Intent(aWorkout.this, aPlan.class);
                         startActivity(intent_newPlan);
                         break;
                     case R.id.ic_workout:
-                        Intent intent_workout = new Intent(MainActivity.this, aWorkout.class);
-                        startActivity(intent_workout);
+                        //Since we already are in this case, we do not reload the activity
                         break;
                     case R.id.ic_analysis:
-                        Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
+                        Intent intent_analysis = new Intent(aWorkout.this, aAnalysis.class);
                         startActivity(intent_analysis);
                         break;
 
