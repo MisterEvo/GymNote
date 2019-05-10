@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
 
                 switch(menuItem.getItemId()) {
                     case R.id.ic_new_plan:
-                        Intent intent_newPlan = new Intent(MainActivity.this, aPlan.class);
+                        Intent intent_newPlan = new Intent(MainActivity.this, a_workout_overview.class);
                         startActivity(intent_newPlan);
                         break;
                     case R.id.ic_workout:
-                        Intent intent_workout = new Intent(MainActivity.this, aWorkout.class);
-                        startActivity(intent_workout);
+                     //   Intent intent_workout = new Intent(MainActivity.this, aWorkout.class);
+                     //   startActivity(intent_workout);
                         break;
                     case R.id.ic_analysis:
-                        Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
-                        startActivity(intent_analysis);
+                     //   Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
+                     //   startActivity(intent_analysis);
                         break;
 
                 }

@@ -16,10 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".aPlan"></activity>
-        <activity android:name=".aAnalysis"></activity>
-        <activity android:name=".aWorkout"></activity>
-        <activity android:name=".aCreate_plan"></activity>
+        <activity android:name=".a_workout_overview"></activity>
 
     </application>
 
