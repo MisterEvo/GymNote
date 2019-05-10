@@ -60,4 +60,15 @@ public class Workout {
     public void setRepsS3(ArrayList<Integer> repsS3) {
         this.repsS3 = repsS3;
     }
+
+    @Override
+    public String toString() {
+        return "Workout{" +
+                "title='" + title + '\'' +
+                ", exercise=" + exercise +
+                ", repsS1=" + repsS1 +
+                ", repsS2=" + repsS2 +
+                ", repsS3=" + repsS3 +
+                '}';
+    }
 }
