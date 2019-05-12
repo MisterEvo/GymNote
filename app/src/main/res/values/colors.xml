@@ -8,5 +8,8 @@
     <color name="colorDarkGreen">#065535</color>
     <color name="colorBlack">#101010</color>
     <color name="colorLightGrey">#f5f5f5</color>
+    <color name="colorLightBlue">#3399ff</color>
+
+
 
 </resources>

@@ -16,11 +16,13 @@ import java.util.ArrayList;
 public class detailed_recycler_adapter extends RecyclerView.Adapter<detailed_recycler_adapter.ViewHolder> {
     private static final String TAG = "detailed_recycler_adapt";
 
-    private ArrayList<String> mWorkout = new ArrayList<>();
+    private ArrayList<String> mExercise;
+    private ArrayList<String> mWeight;
 
-    public detailed_recycler_adapter(ArrayList<String> Workout) {
-        this.mWorkout = Workout;
-        Log.d(TAG, "detailed_recycler_adapter: " + mWorkout);
+    public detailed_recycler_adapter(ArrayList<String> exercise, ArrayList<String> weight) {
+        this.mExercise = exercise;
+        this.mWeight = weight;
+       // Log.d(TAG, "detailed_recycler_adapter: " + mExercise + mWeight);
     }
 
     @NonNull
@@ -32,21 +34,23 @@ public class detailed_recycler_adapter extends RecyclerView.Adapter<detailed_rec
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Log.d(TAG, "onBindViewHolder: loaded: " + mWorkout );
-        viewHolder.exercise.setText(mWorkout.get(i));
+        Log.d(TAG, "onBindViewHolder: loaded: " + mExercise + mWeight);
+        viewHolder.exercise.setText(mExercise.get(i));
+        viewHolder.weight.setText(mWeight.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return mWorkout.size();
+        return mExercise.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView exercise;
+        TextView exercise, weight;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             exercise = itemView.findViewById(R.id.exercise_title);
+            weight = itemView.findViewById(R.id.exercise_weight);
         }
     }
 }

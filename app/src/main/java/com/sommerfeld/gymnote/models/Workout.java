@@ -10,14 +10,16 @@ public class Workout implements Parcelable {
     private String title;
     private String color;
     private ArrayList<String> exercise;
+    private ArrayList<String> weight;
     private ArrayList<String> repsS1;
     private ArrayList<String> repsS2;
     private ArrayList<String> repsS3;
 
-    public Workout(String title, String color, ArrayList<String> exercise, ArrayList<String> repsS1, ArrayList<String> repsS2, ArrayList<String> repsS3) {
+    public Workout(String title, String color, ArrayList<String> exercise, ArrayList<String> weight, ArrayList<String> repsS1, ArrayList<String> repsS2, ArrayList<String> repsS3) {
         this.title = title;
         this.color = color;
         this.exercise = exercise;
+        this.weight = weight;
         this.repsS1 = repsS1;
         this.repsS2 = repsS2;
         this.repsS3 = repsS3;
@@ -30,6 +32,7 @@ public class Workout implements Parcelable {
         title = in.readString();
         color = in.readString();
         exercise = in.createStringArrayList();
+        weight = in.createStringArrayList();
         repsS1 = in.createStringArrayList();
         repsS2 = in.createStringArrayList();
         repsS3 = in.createStringArrayList();
@@ -50,6 +53,14 @@ public class Workout implements Parcelable {
 
     public String getColor() {
         return color;
+    }
+
+    public ArrayList<String> getWeight() {
+        return weight;
+    }
+
+    public void setWeight(ArrayList<String> weight) {
+        this.weight = weight;
     }
 
     public void setColor(String color) {
@@ -102,6 +113,7 @@ public class Workout implements Parcelable {
                 "title='" + title + '\'' +
                 ", color='" + color + '\'' +
                 ", exercise=" + exercise +
+                ", weight=" + weight +
                 ", repsS1=" + repsS1 +
                 ", repsS2=" + repsS2 +
                 ", repsS3=" + repsS3 +
@@ -118,6 +130,7 @@ public class Workout implements Parcelable {
         dest.writeString(title);
         dest.writeString(color);
         dest.writeStringList(exercise);
+        dest.writeStringList(weight);
         dest.writeStringList(repsS1);
         dest.writeStringList(repsS2);
         dest.writeStringList(repsS3);

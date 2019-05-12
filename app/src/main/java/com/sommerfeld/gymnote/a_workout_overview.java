@@ -60,6 +60,7 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutRecy
         String title;
         String color;
         ArrayList<String> exercise = new ArrayList<>();
+        ArrayList<String> weight = new ArrayList<>();
         ArrayList<String> repsS1 = new ArrayList<>();
         ArrayList<String> repsS2 = new ArrayList<>();
         ArrayList<String> repsS3 = new ArrayList<>();
@@ -70,6 +71,8 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutRecy
         color = "orange";
         exercise.add("Benchpress");
         exercise.add("Curls");
+        weight.add("50");
+        weight.add("0");
         repsS1.add("10");
         repsS1.add("9");
         repsS2.add("8");
@@ -82,6 +85,7 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutRecy
         workout.setTitle(title);
         workout.setColor(color);
         workout.setExercise(exercise);
+        workout.setWeight(weight);
         workout.setRepsS1(repsS1);
         workout.setRepsS2(repsS2);
         workout.setRepsS3(repsS3);
@@ -92,6 +96,7 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutRecy
 
         //Pass the generated object in the corresponding outter Array
         mWorkout.add(workout);
+
         //Log.d(TAG, "Added workout to mWorkout: " + mWorkout);
 
         mWorkoutRecyclerAdapter.notifyDataSetChanged();
@@ -102,8 +107,8 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutRecy
         Log.d(TAG, "onWorkoutClick: clicked" + position);
 
         Intent intent = new Intent(this, detailed_workout_plan.class);
+        Log.d(TAG, "onWorkoutClick: Setting Extra: " + mWorkout.get(position));
         intent.putExtra("selected_workout", mWorkout.get(position));
-        Log.d(TAG, "onWorkoutClick: " + mWorkout.get(position));
         startActivity(intent);
 
     }
