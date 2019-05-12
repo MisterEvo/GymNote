@@ -12,13 +12,33 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavViewBar">
 
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:id="@+id/workout_toolbar"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+
+            </android.support.v7.widget.Toolbar>
+
+
+        </android.support.design.widget.AppBarLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="5dp"></android.support.v7.widget.RecyclerView>
+            android:padding="5dp"
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.design.widget.CoordinatorLayout>
 
