@@ -1,6 +1,7 @@
 package com.sommerfeld.gymnote;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +15,7 @@ import com.sommerfeld.gymnote.util.VerticalSpacingItemDecorator;
 
 import java.util.ArrayList;
 
-public class detailed_workout_plan extends AppCompatActivity {
+public class detailed_workout_plan extends AppCompatActivity implements detailed_recycler_adapter.OnExerciseListner {
     private static final String TAG = "detailed_workout_plan";
 
     //UI Components
@@ -51,8 +52,16 @@ public class detailed_workout_plan extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         mRecyclerView.addItemDecoration(itemDecorator);
-        mDetailedRecyclerAdapter = new detailed_recycler_adapter(mWorkoutList, mWeight);
+        mDetailedRecyclerAdapter = new detailed_recycler_adapter(mWorkoutList, mWeight, this);
         mRecyclerView.setAdapter(mDetailedRecyclerAdapter);
 
+    }
+
+    @Override
+    public void onExerciseClick(int position) {
+        // Click Listner for click on specific exercise
+        Log.d(TAG, "onExerciseClick: Clicked" + position);
+        Intent intent = new Intent(this, editWorkout.class);
+        startActivity(intent);
     }
 }

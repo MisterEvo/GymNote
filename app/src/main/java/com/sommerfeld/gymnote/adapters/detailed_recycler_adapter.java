@@ -18,10 +18,12 @@ public class detailed_recycler_adapter extends RecyclerView.Adapter<detailed_rec
 
     private ArrayList<String> mExercise;
     private ArrayList<String> mWeight;
+    private OnExerciseListner mOnExerciseListener;
 
-    public detailed_recycler_adapter(ArrayList<String> exercise, ArrayList<String> weight) {
+    public detailed_recycler_adapter(ArrayList<String> exercise, ArrayList<String> weight, OnExerciseListner onExerciseListner) {
         this.mExercise = exercise;
         this.mWeight = weight;
+        this.mOnExerciseListener = onExerciseListner;
        // Log.d(TAG, "detailed_recycler_adapter: " + mExercise + mWeight);
     }
 
@@ -29,7 +31,7 @@ public class detailed_recycler_adapter extends RecyclerView.Adapter<detailed_rec
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_workout_detail_list_item,viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnExerciseListener);
     }
 
     @Override
@@ -44,13 +46,26 @@ public class detailed_recycler_adapter extends RecyclerView.Adapter<detailed_rec
         return mExercise.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView exercise, weight;
+        OnExerciseListner onExerciseListner;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnExerciseListner onExerciseListner) {
             super(itemView);
             exercise = itemView.findViewById(R.id.exercise_title);
             weight = itemView.findViewById(R.id.exercise_weight);
+            this.onExerciseListner = onExerciseListner;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onExerciseListner.onExerciseClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnExerciseListner {
+        void onExerciseClick(int position);
     }
 }
