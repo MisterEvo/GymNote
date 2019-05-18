@@ -1,9 +1,9 @@
 package com.sommerfeld.gymnote;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent_newPlan);
                         break;
                     case R.id.ic_workout:
-                     //   Intent intent_workout = new Intent(MainActivity.this, aWorkout.class);
-                     //   startActivity(intent_workout);
+                        Intent intent_log = new Intent(MainActivity.this, CompletedLog.class);
+                        startActivity(intent_log);
+
                         break;
                     case R.id.ic_analysis:
                      //   Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);

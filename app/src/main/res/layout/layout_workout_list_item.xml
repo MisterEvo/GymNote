@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="100"
-    android:background="@color/colorLightGrey"
+    android:background="@color/colorDarkGrey"
     android:gravity="center_vertical">
 
     <View
@@ -23,7 +23,15 @@
         android:lines="1"
         android:text="Example workout title"
         android:padding="10dp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorWhite" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/handle"
+        android:layout_weight="24"
+        android:scaleType="center"
+        android:src="@drawable/ic_drag_handle"/>
 
 
 
