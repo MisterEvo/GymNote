@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -80,6 +82,18 @@ public class graphics extends AppCompatActivity {
 
 
         retrieveLog();
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                loadSpecificArray(mSpinner.getSelectedItem().toString());
+                buildGraph();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
@@ -94,8 +108,8 @@ public class graphics extends AppCompatActivity {
                 if (completeds != null) {
                     mCompleteds.addAll(completeds);
                     Log.d(TAG, "onChanged: " + mCompleteds);
-                    buildGraph();
                     loadExercises();
+
                 }
             }
         });
@@ -113,10 +127,21 @@ public class graphics extends AppCompatActivity {
 
     }
 
+    private ArrayList<Completed> loadSpecificArray(String exercise) {
+        ArrayList<Completed> SpecificArray = new ArrayList<>();
+        for(Completed item:mCompleteds) {
+            if (item.getExercise().equals(exercise)) {
+                SpecificArray.add(item);
+            }
+        }
+        Log.d(TAG, "loadSpecificArray: Array: " + SpecificArray);
+        return SpecificArray;
+    }
+
     private void buildGraph() {
         List<Entry> entries = new ArrayList<>();
         int i = 1;
-        for (Completed completed : mCompleteds) {
+        for (Completed completed : loadSpecificArray(mSpinner.getSelectedItem().toString())) {
 
             entries.add(new Entry(i, completed.getWeight()));
             i++;
