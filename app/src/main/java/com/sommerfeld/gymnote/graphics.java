@@ -21,7 +21,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sommerfeld.gymnote.models.Completed;
-import com.sommerfeld.gymnote.models.Workout;
 import com.sommerfeld.gymnote.persistence.CompletedRepo;
 
 import java.util.ArrayList;
@@ -73,6 +72,8 @@ public class graphics extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        String title = "Graphics";
+        toolbar.setTitle(title);
 
         chart = findViewById(R.id.datachart);
         mCompleteds = new ArrayList<Completed>();
@@ -117,8 +118,8 @@ public class graphics extends AppCompatActivity {
 
     // Loads the Exercises Names in the AL to fill the spinner
     private void loadExercises() {
-        for(Completed item:mCompleteds) {
-            if(!mExercise.contains(item.getExercise())) {
+        for (Completed item : mCompleteds) {
+            if (!mExercise.contains(item.getExercise())) {
                 mExercise.add(item.getExercise());
             }
         }
@@ -129,7 +130,7 @@ public class graphics extends AppCompatActivity {
 
     private ArrayList<Completed> loadSpecificArray(String exercise) {
         ArrayList<Completed> SpecificArray = new ArrayList<>();
-        for(Completed item:mCompleteds) {
+        for (Completed item : mCompleteds) {
             if (item.getExercise().equals(exercise)) {
                 SpecificArray.add(item);
             }
