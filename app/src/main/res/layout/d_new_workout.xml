@@ -1,105 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create routine"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:text="Create routine"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="60dp"
-        android:text="Name" />
+        android:text="Group:"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <Spinner
+        android:id="@+id/spinner_group"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="90dp" />
+
+    <Button
+        android:id="@+id/btn_add_Spinner_item"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/ic_add_circle_outline_black_24dp"
+        android:theme="@style/Widget.AppCompat.Button.Borderless" />
+
 
     <EditText
-    android:id="@+id/et_exercise_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="85dp"
-    android:layout_centerHorizontal="true"
-    android:hint="Name"
-    android:ems="18"
-    android:inputType="textPersonName" />
+        android:id="@+id/et_exercise_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="165dp"
+        android:ems="18"
+        android:hint="Name"
+        android:inputType="textPersonName" />
 
     <EditText
-    android:id="@+id/et_weight"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:layout_centerHorizontal="true"
-    android:layout_below="@+id/et_exercise_name"
-    android:hint="Weight"
-    android:ems="18"
-    android:inputType="numberDecimal" />
+        android:id="@+id/et_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_exercise_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:ems="18"
+        android:hint="Weight"
+        android:inputType="numberDecimal" />
 
     <EditText
-    android:id="@+id/et_repsS1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:layout_centerHorizontal="false"
-    android:layout_below="@+id/et_weight"
-    android:hint="Set1"
-    android:ems="3"
-    android:inputType="number" />
+        android:id="@+id/et_repsS1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_weight"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="20dp"
+        android:ems="3"
+        android:hint="Set1"
+        android:inputType="number"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/et_repsS2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/et_weight"
-        android:hint="Set2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:ems="3"
-        android:inputType="number" />
+        android:hint="Set2"
+        android:inputType="number"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/et_repsS3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="false"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/et_weight"
-        android:hint="Set3"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="20dp"
         android:ems="3"
-        android:inputType="number" />
+        android:hint="Set3"
+        android:inputType="number"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btn_okay"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:textColor="#ff0000"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
         android:layout_below="@id/et_repsS3"
-        android:text="Ok" />
+
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:text="Ok"
+        android:textColor="#ff0000" />
+
     <Button
         android:id="@+id/btn_cancel"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/et_repsS3"
         android:layout_marginTop="20dp"
         android:layout_toLeftOf="@id/btn_okay"
-        android:textColor="#ff0000"
-        android:layout_below="@id/et_repsS3"
-        android:text="Cancel" />
+        android:text="Cancel"
+        android:textColor="#ff0000" />
 
 </RelativeLayout>

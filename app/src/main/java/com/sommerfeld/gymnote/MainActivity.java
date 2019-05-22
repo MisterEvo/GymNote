@@ -1,11 +1,13 @@
 package com.sommerfeld.gymnote;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Set up variables
-        BottomNavigationView bnw = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+        BottomNavigationView bnw = findViewById(R.id.bottomNavViewBar);
 
 
         //Set OnClickListener to bottom toolbar
@@ -35,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.ic_analysis:
-                     //   Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
-                     //   startActivity(intent_analysis);
+                        Intent intent_analysis = new Intent(MainActivity.this, graphics.class);
+                        startActivity(intent_analysis);
                         break;
 
                 }

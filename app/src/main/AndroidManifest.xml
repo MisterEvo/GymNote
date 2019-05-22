@@ -19,6 +19,7 @@
         <activity android:name=".a_workout_overview" />
         <activity android:name=".editWorkout" />
         <activity android:name=".CompletedLog" />
+        <activity android:name=".graphics" />
     </application>
 
 </manifest>

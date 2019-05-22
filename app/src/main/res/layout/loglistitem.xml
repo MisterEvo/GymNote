@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/tv_timestamp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="25"
+        android:gravity="center"
+        android:lines="1"
+        android:padding="7dp"
+        android:text="21.05.19"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="21sp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/colorDarkGrey" />
+
+    <TextView
+        android:id="@+id/tv_Exercise"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="53"
+        android:gravity="center"
+        android:lines="1"
+        android:padding="7dp"
+        android:text="Kreuzheben"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="21sp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="@color/colorDarkGrey" />
+
+    <TextView
+        android:id="@+id/tv_weight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="21"
+        android:gravity="center"
+        android:lines="1"
+        android:padding="7dp"
+        android:text="36.493"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="21sp" />
+
+</LinearLayout>
