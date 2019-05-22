@@ -165,7 +165,11 @@ public class CompletedLog extends AppCompatActivity {
             }
 
         });
-        Log.d(TAG, "onQueryTextChange: Size of Array: " + mLogListAdapter.getItemCount());
+        try {
+            Log.d(TAG, "onQueryTextChange: Size of Array: " + mLogListAdapter.getItemCount());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 }

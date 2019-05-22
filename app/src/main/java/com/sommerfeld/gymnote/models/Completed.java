@@ -20,6 +20,7 @@ public class Completed {
 
     @ColumnInfo(name = "exercise")
     private String exercise;
+
     @ColumnInfo(name = "weight")
     private float weight;
 

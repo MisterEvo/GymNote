@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sommerfeld.gymnote.models.Completed;
+import com.sommerfeld.gymnote.models.Workout;
 import com.sommerfeld.gymnote.persistence.CompletedRepo;
 
 import java.util.ArrayList;
@@ -27,10 +30,12 @@ public class graphics extends AppCompatActivity {
     private static final String TAG = "graphics";
     //UI
     LineChart chart;
+    Spinner mSpinner;
 
     //Vars
     private ArrayList<Completed> mCompleteds;
     private CompletedRepo mCompletedRepo;
+    private ArrayList<String> mExercise;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +74,10 @@ public class graphics extends AppCompatActivity {
 
         chart = findViewById(R.id.datachart);
         mCompleteds = new ArrayList<Completed>();
+        mExercise = new ArrayList<>();
         mCompletedRepo = new CompletedRepo(this);
+        mSpinner = findViewById(R.id.spinner_excercise);
+
 
         retrieveLog();
 
@@ -87,9 +95,22 @@ public class graphics extends AppCompatActivity {
                     mCompleteds.addAll(completeds);
                     Log.d(TAG, "onChanged: " + mCompleteds);
                     buildGraph();
+                    loadExercises();
                 }
             }
         });
+    }
+
+    // Loads the Exercises Names in the AL to fill the spinner
+    private void loadExercises() {
+        for(Completed item:mCompleteds) {
+            if(!mExercise.contains(item.getExercise())) {
+                mExercise.add(item.getExercise());
+            }
+        }
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, mExercise);
+        mSpinner.setAdapter(spinnerAdapter);
+
     }
 
     private void buildGraph() {
