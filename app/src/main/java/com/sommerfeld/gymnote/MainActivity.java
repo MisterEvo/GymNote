@@ -3,22 +3,46 @@ package com.sommerfeld.gymnote;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.sommerfeld.gymnote.models.Completed;
+import com.sommerfeld.gymnote.persistence.CompletedRepo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainAct";
+    TextView total_workout;
+    TextView last_workout;
+    private ArrayList<Completed> mCompleteds;
+    private CompletedRepo mCompletedRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Dashboard");
+
+        mCompleteds = new ArrayList<Completed>();
+        mCompletedRepo = new CompletedRepo(this);
+
         //Set up variables
         BottomNavigationView bnw = findViewById(R.id.bottomNavViewBar);
+        total_workout = findViewById(R.id.tv_main_workout_total);
+        last_workout = findViewById(R.id.tv_main_last_workout);
 
+        retrieveLog();
 
         //Set OnClickListener to bottom toolbar
         //This will switch the clicked menu item and then will intent the respective activity
@@ -43,6 +67,25 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 return false;
+            }
+        });
+    }
+
+    private void retrieveLog() {
+        mCompletedRepo.retrieveCompletedTask().observe(this, new Observer<List<Completed>>() {
+            @Override
+            public void onChanged(List<Completed> completeds) {
+
+                if (mCompleteds.size() > 0) {
+                    mCompleteds.clear();
+                }
+                if (completeds != null) {
+                    mCompleteds.addAll(completeds);
+                    String size = String.valueOf(mCompleteds.size());
+                    total_workout.setText(size);
+                    String lastWorkout = mCompleteds.get((mCompleteds.size() - 1)).getTitle();
+                    last_workout.setText(lastWorkout);
+                }
             }
         });
     }
