@@ -4,9 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,9 +42,24 @@ public class MainActivity extends AppCompatActivity {
     private TextView total_exercises;
     private ArrayList<Completed> mCompleteds;
     private CompletedRepo mCompletedRepo;
-    public static final int PICKFILE_RESULT_CODE = 1;
-    private Uri fileUri;
-    private String filePath;
+    private boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press Back once more to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         total_workout = findViewById(R.id.tv_main_workout_total);
         last_workout = findViewById(R.id.tv_main_last_workout);
         total_exercises = findViewById(R.id.tv_main_total_exercises);
+
+        total_workout.setText("0");
+        last_workout.setText(getString(R.string.noworkoutyet));
 
         retrieveLog();
 

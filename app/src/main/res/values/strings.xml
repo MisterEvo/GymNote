@@ -12,4 +12,5 @@
     <string name="last_workout">last workout</string>
     <string name="was_your_last_workout_group">Was your last workout group</string>
     <string name="exercises_in_total">Exercises in total</string>
+    <string name="noworkoutyet">No workout yet</string>
 </resources>
