@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="100"
-    android:background="@color/colorDarkGrey"
+    android:background="@color/colorLightBlue"
     android:gravity="center_vertical">
 
     <View

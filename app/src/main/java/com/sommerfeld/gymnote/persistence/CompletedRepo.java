@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.sommerfeld.gymnote.async.DeleteLogAsync;
 import com.sommerfeld.gymnote.async.InsertLogAsync;
+import com.sommerfeld.gymnote.async.UpdateLogAsync;
 import com.sommerfeld.gymnote.models.Completed;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CompletedRepo {
     }
 
     public void updateComplete(Completed completed) {
-
+        new UpdateLogAsync(mCompletedDatabase.getCompleteDAO()).execute(completed);
     }
 
     public LiveData<List<Completed>> retrieveCompletedTask() {

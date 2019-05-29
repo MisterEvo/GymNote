@@ -143,7 +143,7 @@ public class editWorkout extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         spinner = findViewById(R.id.spinner_group);
-        et_weight = findViewById(R.id.et_weight);
+        et_weight = findViewById(R.id.et_d_weight);
         btn_add05 = findViewById(R.id.btn_add05);
         btn_add0625 = findViewById(R.id.btn_add0625);
         btn_add1 = findViewById(R.id.btn_add1);

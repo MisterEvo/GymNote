@@ -1,5 +1,8 @@
 package com.sommerfeld.gymnote;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Set up variables
         BottomNavigationView bnw = findViewById(R.id.bottomNavViewBar);
+        bnw.setSelectedItemId(R.id.ic_dashboard);
         total_workout = findViewById(R.id.tv_main_workout_total);
         last_workout = findViewById(R.id.tv_main_last_workout);
 
@@ -68,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch(menuItem.getItemId()) {
+                    case R.id.ic_dashboard:
+                        //Current view
                     case R.id.ic_new_plan:
                         Intent intent_newPlan = new Intent(MainActivity.this, a_workout_overview.class);
                         startActivity(intent_newPlan);
@@ -132,6 +138,14 @@ public class MainActivity extends AppCompatActivity {
                 importFiles(backup2, "/databases/workouts.db-shm");
                 importFiles(backup3, "/databases/workouts.db-wal");
                 importFiles(backupSharedPrefs, "/shared_prefs/pref_file.xml");
+
+                //Restart App to load new db
+                Intent mStartActivity = new Intent(this, MainActivity.class);
+                int mPendingIntentId = 123456;
+                PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager mgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                System.exit(0);
 
                 break;
             case R.id.menu_export:

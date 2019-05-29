@@ -1,15 +1,22 @@
 package com.sommerfeld.gymnote;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -28,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CompletedLog extends AppCompatActivity {
+public class CompletedLog extends AppCompatActivity implements LogListAdapter.OnLogListener {
     private static final String TAG = "CompletedLog";
 
     //UI
@@ -65,6 +72,7 @@ public class CompletedLog extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Log of Workouts");
 
         retrieveLog();
 
@@ -80,6 +88,10 @@ public class CompletedLog extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch (menuItem.getItemId()) {
+                    case R.id.ic_dashboard:
+                        Intent intent_Dashboard = new Intent(CompletedLog.this, MainActivity.class);
+                        startActivity(intent_Dashboard);
+                        break;
                     case R.id.ic_new_plan:
                         Intent intent_newPlan = new Intent(CompletedLog.this, a_workout_overview.class);
                         startActivity(intent_newPlan);
@@ -90,8 +102,8 @@ public class CompletedLog extends AppCompatActivity {
 
                         break;
                     case R.id.ic_analysis:
-                        //   Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
-                        //   startActivity(intent_analysis);
+                        Intent intent_analysis = new Intent(CompletedLog.this, graphics.class);
+                        startActivity(intent_analysis);
                         break;
 
                 }
@@ -126,7 +138,7 @@ public class CompletedLog extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         Log.d(TAG, "initRecyclerView: Pass mCompleteds: " + mCompleteds);
-        mLogListAdapter = new LogListAdapter(mCompleteds);
+        mLogListAdapter = new LogListAdapter(mCompleteds, this);
         mRecyclerView.setAdapter(mLogListAdapter);
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this)
                 .colorResId(R.color.colorPrimaryDark).size(2).build());
@@ -171,5 +183,81 @@ public class CompletedLog extends AppCompatActivity {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public void onLogLongClick(int id) {
+        // Launch edit view
+        int index = findIndex(mCompleteds, id);
+        Log.d(TAG, "onLogLongClick: Click id: " + id + mCompleteds.get(index));
+        buildDialog(mCompleteds.get(index));
+    }
+
+    private void buildDialog(final Completed completed) {
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(CompletedLog.this);
+        final View mView = getLayoutInflater().inflate(R.layout.d_edit_log, null);
+
+        //Dialog UI
+
+        TextView exercise = mView.findViewById(R.id.tv_d_exercise);
+        final EditText timestamp = mView.findViewById(R.id.et_d_timestamp);
+        final EditText weight = mView.findViewById(R.id.et_d_weight);
+        final EditText repS1 = mView.findViewById(R.id.et_d_repsS1);
+        final EditText repS2 = mView.findViewById(R.id.et_d_repsS2);
+        final EditText repS3 = mView.findViewById(R.id.et_d_repsS3);
+        Button btnokay = mView.findViewById(R.id.btn_d_okay);
+
+        //------
+        // Fill UI from DB
+
+        exercise.setText(completed.getExercise());
+        timestamp.setText(completed.getTimestamp());
+        weight.setText(String.valueOf(completed.getWeight()));
+        repS1.setText(String.valueOf(completed.getRepsS1()));
+        repS2.setText(String.valueOf(completed.getRepsS2()));
+        repS3.setText(String.valueOf(completed.getRepsS3()));
+
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.show();
+
+        btnokay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newTimestamp = timestamp.getText().toString();
+                float newWeight = Float.parseFloat(weight.getText().toString());
+                int newRepS1 = Integer.parseInt(repS1.getText().toString());
+                int newRepS2 = Integer.parseInt(repS2.getText().toString());
+                int newRepS3 = Integer.parseInt(repS3.getText().toString());
+
+                completed.setTimestamp(newTimestamp);
+                completed.setWeight(newWeight);
+                completed.setRepsS1(newRepS1);
+                completed.setRepsS2(newRepS2);
+                completed.setRepsS3(newRepS3);
+
+                mCompletedRepo.updateComplete(completed);
+                Toast.makeText(CompletedLog.this, "Updated entry!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public int findIndex(ArrayList<Completed> CompletedArr, int t) {
+        int len = CompletedArr.size();
+        int i = 0;
+
+        while (i < len) {
+
+            if (CompletedArr.get(i).getId() == t) {
+                return i;
+            } else {
+                i = i + 1;
+            }
+        }
+        return -1;
     }
 }

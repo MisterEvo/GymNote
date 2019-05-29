@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_marginTop="5dp"
-                android:text="0"
+                android:text="sum"
                 android:textAlignment="center"
                 android:textSize="37sp"
                 android:textStyle="bold" />
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_marginTop="5dp"
-                android:text="Brust / Bizeps"
+                android:text="last workout"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold" />

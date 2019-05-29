@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/ic_dashboard"
+        android:icon="@drawable/ic_data_usage"
+        android:title="@string/dashboard" />
+
+    <item
         android:id="@+id/ic_new_plan"
         android:icon="@drawable/ic_new_plan"
         android:title="@string/newplan"/>

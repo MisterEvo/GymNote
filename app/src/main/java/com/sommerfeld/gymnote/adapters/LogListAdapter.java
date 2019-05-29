@@ -22,6 +22,9 @@ public class LogListAdapter extends RecyclerView.Adapter<LogListAdapter.ViewHold
 
     ArrayList<Completed> mCompleted = new ArrayList<>();
     ArrayList<Completed> mCompletedFull;
+
+    private OnLogListener mOnLogListener;
+
     private Filter CompletedFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -52,8 +55,9 @@ public class LogListAdapter extends RecyclerView.Adapter<LogListAdapter.ViewHold
         }
     };
 
-    public LogListAdapter(ArrayList<Completed> Completed) {
+    public LogListAdapter(ArrayList<Completed> Completed, OnLogListener onLogListener) {
         this.mCompleted = Completed;
+        this.mOnLogListener = onLogListener;
         Log.d(TAG, "LogListAdapter: mCompleted: " + mCompleted);
         mCompletedFull = new ArrayList<>(mCompleted);
         Log.d(TAG, "LogListAdapter: CopyFull: " + mCompletedFull);
@@ -64,7 +68,7 @@ public class LogListAdapter extends RecyclerView.Adapter<LogListAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.loglistitem, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnLogListener);
     }
 
     @Override
@@ -91,14 +95,27 @@ public class LogListAdapter extends RecyclerView.Adapter<LogListAdapter.ViewHold
         return CompletedFilter;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView timestamp, exercise, weight;
+    public interface OnLogListener {
+        void onLogLongClick(int id);
+    }
 
-        public ViewHolder(@NonNull View itemView) {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+        TextView timestamp, exercise, weight;
+        OnLogListener onLogListener;
+
+        public ViewHolder(@NonNull View itemView, OnLogListener onLogListener) {
             super(itemView);
             timestamp = itemView.findViewById(R.id.tv_timestamp);
             exercise = itemView.findViewById(R.id.tv_Exercise);
             weight = itemView.findViewById(R.id.tv_weight);
+            this.onLogListener = onLogListener;
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            onLogListener.onLogLongClick(mCompleted.get(getAdapterPosition()).getId());
+            return false;
         }
     }
 }

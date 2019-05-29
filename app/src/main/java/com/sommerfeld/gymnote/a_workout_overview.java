@@ -19,13 +19,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,9 +36,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sommerfeld.gymnote.adapters.OutterListAdapter;
-import com.sommerfeld.gymnote.adapters.WorkoutListAdapterNew;
-import com.sommerfeld.gymnote.listener.OnStartDragListener;
-import com.sommerfeld.gymnote.listener.OnWorkoutListChangedListener;
 import com.sommerfeld.gymnote.models.Workout;
 import com.sommerfeld.gymnote.persistence.WorkoutRepo;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -46,7 +43,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class a_workout_overview extends AppCompatActivity implements WorkoutListAdapterNew.onWorkoutListener, OnStartDragListener, OnWorkoutListChangedListener {
+public class a_workout_overview extends AppCompatActivity {
 
     private static final String TAG = "a_workout_overview";
 
@@ -80,16 +77,6 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
     public static final String PREFS_FILE = "pref_file";
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        saveOrder(mWorkout);
-        super.onBackPressed();
-    }
 
     private TextWatcher addTextWatcher = new TextWatcher() {
         @Override
@@ -133,11 +120,13 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("List of Workouts");
 
         //Load the test obj
         retrieveWorkouts();
 
         BottomNavigationView bnw = findViewById(R.id.bottomNavViewBar);
+        bnw.setSelectedItemId(R.id.ic_new_plan);
 
 
         //Set OnClickListener to bottom toolbar
@@ -147,7 +136,12 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch (menuItem.getItemId()) {
+                    case R.id.ic_dashboard:
+                        Intent intent_Dashboard = new Intent(a_workout_overview.this, MainActivity.class);
+                        startActivity(intent_Dashboard);
+                        break;
                     case R.id.ic_new_plan:
+                        //Current view
                         break;
                     case R.id.ic_workout:
                         Intent intent_log = new Intent(a_workout_overview.this, CompletedLog.class);
@@ -155,8 +149,8 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
 
                         break;
                     case R.id.ic_analysis:
-                        //   Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
-                        //   startActivity(intent_analysis);
+                        Intent intent_analysis = new Intent(a_workout_overview.this, graphics.class);
+                        startActivity(intent_analysis);
                         break;
 
                 }
@@ -173,13 +167,13 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
         mBtnOk = mView.findViewById(R.id.btn_okay);
         mBtnCancel = mView.findViewById(R.id.btn_cancel);
         mBtnAddSpinnerItem = mView.findViewById(R.id.btn_add_Spinner_item);
-        mEtName = mView.findViewById(R.id.et_exercise_name);
+        mEtName = mView.findViewById(R.id.et_name);
         mEtWeight = mView.findViewById(R.id.et_weight);
         mEtSet1 = mView.findViewById(R.id.et_repsS1);
         mEtSet2 = mView.findViewById(R.id.et_repsS2);
         mEtSet3 = mView.findViewById(R.id.et_repsS3);
         mBtnOk.setEnabled(false);
-        mBtnOk.setTextColor(getApplication().getResources().getColor(R.color.colorDarkGrey));
+        mBtnOk.setTextColor(ContextCompat.getColor(this, R.color.colorDarkGrey));
 
         mEtName.addTextChangedListener(addTextWatcher);
         mEtWeight.addTextChangedListener(addTextWatcher);
@@ -278,8 +272,6 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
     }
 
     private void retrieveWorkouts() {
-        //    String getorder = mSharedPrefs.getString(LIST_SORTED_DATA_ID, "");
-        //    Toast.makeText(this, "Loaded PREFS: " + getorder, Toast.LENGTH_SHORT).show();
         mWorkoutRepo.retrieveWorkoutsTask().observe(this, new Observer<List<Workout>>() {
             @Override
             public void onChanged(List<Workout> workouts) {
@@ -288,7 +280,6 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
                 }
                 if (workouts != null) {
                     mWorkoutTemp.addAll(workouts);
-                    //  mWorkout = getSortedData();
                     mWorkout = new ArrayList<>(mWorkoutTemp);
                     initRecyclerView();
                 }
@@ -306,22 +297,16 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
 
         ArrayList<String> GroupArray = new ArrayList<>();
 
+        // Creates an Array with every single title (Group of exercises)
         for (Workout workout : mWorkout) {
-            Log.d(TAG, "initRecyclerView: Current Workout: " + workout);
             if (!GroupArray.contains(workout.getTitle())) {
                 GroupArray.add(workout.getTitle());
             }
         }
-        Log.d(TAG, "initRecyclerView: GroupArray:" + GroupArray);
 
 
         //setup Adapter with empty list
-        Log.d(TAG, "initRecyclerView: mWorkout: " + mWorkout);
-        //mAdapter = new WorkoutListAdapter(mWorkout, this, this, this, this);
-        mAdapter = new OutterListAdapter(this, GroupArray, mWorkout);
-        // ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
-        // mItemTouchHelper = new ItemTouchHelper(callback);
-        // mItemTouchHelper.attachToRecyclerView(mRecyclerview);
+        mAdapter = new OutterListAdapter(this, GroupArray, mWorkout, mWorkoutRepo);
         mRecyclerview.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this)
                 .colorResId(R.color.colorPrimaryDark).size(2).build());
         mRecyclerview.setAdapter(mAdapter);
@@ -329,42 +314,6 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
     }
 
 
-    @Override
-    public void onWorkoutClick(int position, int itemID) {
-        //OnClick für Einträge in der Liste
-        Log.d(TAG, "onWorkoutClick: " + mWorkout.get(position));
-        int id = mWorkout.get(position).getId();
-        Intent i = new Intent(this, editWorkout.class);
-        i.putExtra("selected_item", id);
-        startActivity(i);
-    }
-
-
-    @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
-    }
-
-    @Override
-    public void onWorkoutListChanged(List<Workout> workouts) {
-
-    }
-
-    public void saveOrder(List<Workout> workouts) {
-        List<Integer> sortedList = new ArrayList<>();
-        for (Workout allWorkouts : workouts) {
-            sortedList.add(allWorkouts.getId());
-        }
-        //Put Ids to JSON
-        Gson gson = new Gson();
-        String jsonSortedList = gson.toJson(sortedList);
-
-        //Save json to SharedPrefs
-        mEditor.putString(LIST_SORTED_DATA_ID, jsonSortedList).commit();
-        mEditor.commit();
-        Toast.makeText(this, "Saved order:" + jsonSortedList, Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -377,10 +326,11 @@ public class a_workout_overview extends AppCompatActivity implements WorkoutList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_Order:
-                saveOrder(mWorkout);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 //        private ArrayList<Workout> getSortedData () {
 //            ArrayList<Workout> sortedWorkout = new ArrayList<>();

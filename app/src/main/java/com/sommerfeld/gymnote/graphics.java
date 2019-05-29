@@ -16,9 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sommerfeld.gymnote.models.Completed;
 import com.sommerfeld.gymnote.persistence.CompletedRepo;
@@ -43,7 +46,12 @@ public class graphics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graphics);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Analysis");
+
         BottomNavigationView bnw = findViewById(R.id.bottomNavViewBar);
+        bnw.setSelectedItemId(R.id.ic_analysis);
         //Set OnClickListener to bottom toolbar
         //This will switch the clicked menu item and then will intent the respective activity
         bnw.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,6 +59,11 @@ public class graphics extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 switch (menuItem.getItemId()) {
+
+                    case R.id.ic_dashboard:
+                        Intent intent_Dashboard = new Intent(graphics.this, MainActivity.class);
+                        startActivity(intent_Dashboard);
+                        break;
                     case R.id.ic_new_plan:
                         Intent intent_newPlan = new Intent(graphics.this, a_workout_overview.class);
                         startActivity(intent_newPlan);
@@ -61,8 +74,7 @@ public class graphics extends AppCompatActivity {
 
                         break;
                     case R.id.ic_analysis:
-                        //   Intent intent_analysis = new Intent(MainActivity.this, aAnalysis.class);
-                        //   startActivity(intent_analysis);
+                        //Current view
                         break;
 
                 }
@@ -70,10 +82,6 @@ public class graphics extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        String title = "Graphics";
-        toolbar.setTitle(title);
 
         chart = findViewById(R.id.datachart);
         mCompleteds = new ArrayList<Completed>();
@@ -128,7 +136,7 @@ public class graphics extends AppCompatActivity {
 
     }
 
-    private ArrayList<Completed> loadSpecificArray(String exercise) {
+    public ArrayList<Completed> loadSpecificArray(String exercise) {
         ArrayList<Completed> SpecificArray = new ArrayList<>();
         for (Completed item : mCompleteds) {
             if (item.getExercise().equals(exercise)) {
@@ -141,16 +149,58 @@ public class graphics extends AppCompatActivity {
 
     private void buildGraph() {
         List<Entry> entries = new ArrayList<>();
-        int i = 1;
         for (Completed completed : loadSpecificArray(mSpinner.getSelectedItem().toString())) {
-
-            entries.add(new Entry(i, completed.getWeight()));
-            i++;
+            entries.add(new Entry(completed.getId(), completed.getWeight()));
+            Log.d(TAG, "buildGraph: Added X,Y:" + completed.getId() + " " + completed.getWeight());
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, "DatenVol");
+        LineDataSet dataSet = new LineDataSet(entries, "Weight");
         LineData lineData = new LineData(dataSet);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(new MyAxisValueFormatter());
         chart.setData(lineData);
         chart.invalidate();
     }
+
+    public int findIndex(ArrayList<Completed> CompletedArr, float t) {
+        int len = CompletedArr.size();
+        int i = 0;
+
+        while (i < len) {
+
+            if (CompletedArr.get(i).getId() == t) {
+                return i;
+            } else {
+                i = i + 1;
+            }
+        }
+        return -1;
+    }
+
+    private class MyAxisValueFormatter implements IAxisValueFormatter {
+        ArrayList<Completed> specifics = loadSpecificArray(mSpinner.getSelectedItem().toString());
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+
+
+            int index = findIndex(specifics, value);
+            Log.d(TAG, "getFormattedValue: Passed id: " + value);
+            Log.d(TAG, "getFormattedValue: Index of id: " + index);
+            String result = "";
+
+            try {
+                result = specifics.get(index).getTimestamp();
+            } catch (Exception e) {
+                result = "";
+            }
+            Log.d(TAG, "getFormattedValue: Result: " + result);
+            return result;
+        }
+    }
+
+
 }
+
