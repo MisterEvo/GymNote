@@ -132,11 +132,22 @@ public class MainActivity extends AppCompatActivity {
                 String backup1 = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "workoutsExport.db";
                 String backup2 = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "workoutsExport.db-shm";
                 String backup3 = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "workoutsExport.db-wal";
+
+                String backupCOM1 = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "completedExport.db";
+                String backupCOM2 = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "completedExport.db-shm";
+                String backupCOM3 = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "completedExport.db-wal";
+
+
                 String backupSharedPrefs = Environment.getExternalStorageDirectory() + File.separator + "GymNote" + File.separator + "pref_fileExport.xml";
 
                 importFiles(backup1, "/databases/workouts.db");
                 importFiles(backup2, "/databases/workouts.db-shm");
                 importFiles(backup3, "/databases/workouts.db-wal");
+
+                importFiles(backupCOM1, "/databases/completed.db");
+                importFiles(backupCOM2, "/databases/completed.db-shm");
+                importFiles(backupCOM3, "/databases/completed.db-wal");
+
                 importFiles(backupSharedPrefs, "/shared_prefs/pref_file.xml");
 
                 //Restart App to load new db
@@ -153,10 +164,21 @@ public class MainActivity extends AppCompatActivity {
                     String DB_FILEPATH1 = getDataDir().toString() + "/databases/workouts.db";
                     String DB_FILEPATH2 = getDataDir().toString() + "/databases/workouts.db-shm";
                     String DB_FILEPATH3 = getDataDir().toString() + "/databases/workouts.db-wal";
+
+                    String DB_FILEPATHCOM1 = getDataDir().toString() + "/databases/completed.db";
+                    String DB_FILEPATHCOM2 = getDataDir().toString() + "/databases/completed.db-shm";
+                    String DB_FILEPATHCOM3 = getDataDir().toString() + "/databases/completed.db-wal";
+
                     String SHAREDPREFS = getDataDir().toString() + "/shared_prefs/pref_file.xml";
+
                     exportFiles(DB_FILEPATH1, "workoutsExport.db");
                     exportFiles(DB_FILEPATH2, "workoutsExport.db-shm");
                     exportFiles(DB_FILEPATH3, "workoutsExport.db-wal");
+
+                    exportFiles(DB_FILEPATHCOM1, "completedExport.db");
+                    exportFiles(DB_FILEPATHCOM2, "completedExport.db-shm");
+                    exportFiles(DB_FILEPATHCOM3, "completedExport.db-wal");
+
                     exportFiles(SHAREDPREFS, "pref_fileExport.xml");
                 } catch (IOException e) {
                     e.printStackTrace();
