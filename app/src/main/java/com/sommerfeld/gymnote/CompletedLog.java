@@ -164,15 +164,14 @@ public class CompletedLog extends AppCompatActivity implements LogListAdapter.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                mTVCount.setText(String.valueOf(mRecyclerView.getChildCount()));
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 mLogListAdapter.getFilter().filter(newText);
-                String searchSize = String.valueOf(mCompleteds.size());
-                mTVCount.setText(searchSize);
                 return false;
             }
 

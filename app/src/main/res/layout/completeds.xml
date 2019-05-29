@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="140dp"
-            android:text="23"
+            android:text="0"
             android:textSize="25sp" />
 
         <TextView
@@ -112,7 +112,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="140dp"
             android:layout_marginEnd="140dp"
-            android:text="30"
+            android:text="0"
             android:textSize="25sp" />
 
 

@@ -104,11 +104,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (completeds != null) {
                     try {
+                        //TODO: Change total workout counter to real workout days and not number of total exercises
                         mCompleteds.addAll(completeds);
                         String size = String.valueOf(mCompleteds.size());
                         total_workout.setText(size);
-                        String lastWorkout = mCompleteds.get((mCompleteds.size() - 1)).getTitle();
-                        last_workout.setText(lastWorkout);
+                        if (mCompleteds.size() != 0) {
+                            String lastWorkout = mCompleteds.get((mCompleteds.size() - 1)).getTitle();
+                            last_workout.setText(lastWorkout);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

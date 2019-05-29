@@ -149,7 +149,7 @@ public class WorkoutListAdapterNew extends RecyclerView.Adapter<WorkoutListAdapt
             this.onWorkoutListener = onWorkoutListener;
 
             mGestureDetector = new GestureDetector(itemView.getContext(), this);
-            handleView.setOnTouchListener(this);
+            itemView.setOnTouchListener(this);
         }
 
 
@@ -165,6 +165,7 @@ public class WorkoutListAdapterNew extends RecyclerView.Adapter<WorkoutListAdapt
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
+            Log.d(TAG, "onSingleTapUp: Tapped");
             onWorkoutListener.onWorkoutClick(getAdapterPosition(), mWorkouts.get(getAdapterPosition()).getId());
             return false;
         }
