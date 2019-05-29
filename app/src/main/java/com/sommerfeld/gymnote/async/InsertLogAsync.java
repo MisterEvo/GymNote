@@ -7,7 +7,7 @@ import com.sommerfeld.gymnote.persistence.CompletedDAO;
 
 public class InsertLogAsync extends AsyncTask<Completed, Void, Void> {
 
-    private CompletedDAO mCompletedDAO;
+    private final CompletedDAO mCompletedDAO;
 
     public InsertLogAsync(CompletedDAO dao) {
         mCompletedDAO = dao;

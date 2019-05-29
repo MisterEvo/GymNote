@@ -13,7 +13,7 @@ import java.util.List;
 
 public class WorkoutRepo {
 
-    private WorkoutDatabase mWorkoutDatabase;
+    private final WorkoutDatabase mWorkoutDatabase;
 
     public WorkoutRepo(Context context) {
         mWorkoutDatabase = WorkoutDatabase.getInstance(context);

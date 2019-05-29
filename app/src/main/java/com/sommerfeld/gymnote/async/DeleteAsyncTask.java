@@ -7,7 +7,7 @@ import com.sommerfeld.gymnote.persistence.WorkoutDAO;
 
 public class DeleteAsyncTask extends AsyncTask<Workout, Void, Void> {
 
-    private WorkoutDAO mWorkoutDAO;
+    private final WorkoutDAO mWorkoutDAO;
 
     public DeleteAsyncTask(WorkoutDAO dao) {
         mWorkoutDAO = dao;

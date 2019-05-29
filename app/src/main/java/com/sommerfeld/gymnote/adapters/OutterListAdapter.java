@@ -21,6 +21,7 @@ import com.sommerfeld.gymnote.editWorkout;
 import com.sommerfeld.gymnote.models.Workout;
 import com.sommerfeld.gymnote.persistence.WorkoutRepo;
 import com.sommerfeld.gymnote.util.WorkoutItemTouchHelper;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +29,12 @@ import java.util.List;
 
 public class OutterListAdapter extends RecyclerView.Adapter<OutterListAdapter.ViewHolder> implements WorkoutListAdapterNew.onWorkoutListener {
 
-    public static final String PREFS_FILE = "pref_file";
+    private static final String PREFS_FILE = "pref_file";
     private static final String TAG = "OutterAdapter";
     private ArrayList<Workout> mGroupWorkouts = new ArrayList<>();
-    private ArrayList<Workout> groupWorkoutsFiltered = new ArrayList<>();
-    Context mContext;
+    private final Context mContext;
     private ArrayList<String> mGroup = new ArrayList<>();
-    private WorkoutRepo mWorkoutRepo;
-    private ArrayList<Workout> innerWorkouts = new ArrayList<>();
-    private SharedPreferences mSharedPrefs;
-    private SharedPreferences.Editor mEditor;
+    private final WorkoutRepo mWorkoutRepo;
 
     public OutterListAdapter(Context context, ArrayList<String> Group, ArrayList<Workout> groupWorkoutsCon, WorkoutRepo workoutRepo) {
         mContext = context;
@@ -56,7 +53,7 @@ public class OutterListAdapter extends RecyclerView.Adapter<OutterListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        groupWorkoutsFiltered = new ArrayList<>();
+        ArrayList<Workout> groupWorkoutsFiltered = new ArrayList<>();
 
         holder.groupName.setText(mGroup.get(position));
         holder.innerRV.setHasFixedSize(true);
@@ -69,20 +66,22 @@ public class OutterListAdapter extends RecyclerView.Adapter<OutterListAdapter.Vi
             }
         }
         Log.d(TAG, "onBindViewHolder: Bind groupWorkout: " + groupWorkoutsFiltered);
-        innerWorkouts = loadSorted(groupWorkoutsFiltered);
+        ArrayList<Workout> innerWorkouts = loadSorted(groupWorkoutsFiltered);
 
         WorkoutListAdapterNew adapter = new WorkoutListAdapterNew(mContext, innerWorkouts, this, mWorkoutRepo);
         ItemTouchHelper.Callback callback = new WorkoutItemTouchHelper(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         adapter.setTouchHelper(itemTouchHelper);
         itemTouchHelper.attachToRecyclerView(holder.innerRV);
+        holder.innerRV.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext)
+                .colorResId(R.color.colorPrimaryDark).size(2).build());
         holder.innerRV.setAdapter(adapter);
 
     }
 
     private ArrayList<Workout> loadSorted(ArrayList<Workout> unsorted) {
-        mSharedPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
-        mEditor = mSharedPrefs.edit();
+        SharedPreferences mSharedPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPrefs.edit();
         mEditor.apply();
 
         ArrayList<Workout> sortedWorkout = new ArrayList<>();
@@ -141,10 +140,10 @@ public class OutterListAdapter extends RecyclerView.Adapter<OutterListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView groupName;
-        RecyclerView innerRV;
+        final TextView groupName;
+        final RecyclerView innerRV;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             groupName = itemView.findViewById(R.id.tv_outter_group_name);
             innerRV = itemView.findViewById(R.id.rv_inner);

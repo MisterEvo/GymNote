@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dialog_bg"
@@ -24,6 +25,7 @@
         android:layout_marginTop="65dp"
         android:ems="18"
         android:hint="Timestamp"
+        android:autofillHints=""
         android:inputType="textPersonName" />
 
     <EditText
@@ -35,6 +37,7 @@
         android:layout_marginTop="20dp"
         android:ems="18"
         android:hint="Weight"
+        android:autofillHints=""
         android:inputType="numberDecimal" />
 
     <EditText
@@ -47,6 +50,7 @@
         android:ems="3"
         android:hint="Set1"
         android:inputType="number"
+        android:autofillHints=""
         android:textAlignment="center" />
 
     <EditText
@@ -59,6 +63,7 @@
         android:ems="3"
         android:hint="Set2"
         android:inputType="number"
+        android:autofillHints=""
         android:textAlignment="center" />
 
     <EditText
@@ -66,13 +71,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_d_weight"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="false"
         android:layout_marginTop="20dp"
         android:ems="3"
         android:hint="Set3"
         android:inputType="number"
-        android:textAlignment="center" />
+        android:autofillHints=""
+        android:textAlignment="center"
+        tools:ignore="RtlHardcoded" />
 
     <Button
         android:id="@+id/btn_d_okay"

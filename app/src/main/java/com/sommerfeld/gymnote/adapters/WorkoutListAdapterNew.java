@@ -27,15 +27,13 @@ import java.util.List;
 
 public class WorkoutListAdapterNew extends RecyclerView.Adapter<WorkoutListAdapterNew.ItemViewHolder> implements ItemTouchHelperAdapter {
 
-    public static final String PREFS_FILE = "pref_file";
-    private ArrayList<Workout> mWorkouts;
-    private onWorkoutListener mOnWorkoutListener;
+    private static final String PREFS_FILE = "pref_file";
+    private final ArrayList<Workout> mWorkouts;
+    private final onWorkoutListener mOnWorkoutListener;
     private static final String TAG = "WorkoutListAdapterNew";
     private ItemTouchHelper mTouchHelper;
-    private WorkoutRepo mWorkoutRepo;
-    private Context mContext;
-    private SharedPreferences mSharedPrefs;
-    private SharedPreferences.Editor mEditor;
+    private final WorkoutRepo mWorkoutRepo;
+    private final Context mContext;
 
 
     public WorkoutListAdapterNew(Context context, ArrayList<Workout> mWorkouts, onWorkoutListener onWorkoutListener, WorkoutRepo workoutRepo) {
@@ -49,6 +47,7 @@ public class WorkoutListAdapterNew extends RecyclerView.Adapter<WorkoutListAdapt
     @Override
     public WorkoutListAdapterNew.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_workout_list_item, parent, false);
+        //noinspection UnnecessaryLocalVariable
         ItemViewHolder viewHolder = new ItemViewHolder(rowView, mOnWorkoutListener);
 
         return viewHolder;
@@ -104,8 +103,8 @@ public class WorkoutListAdapterNew extends RecyclerView.Adapter<WorkoutListAdapt
     @Override
     public void saveOrder() {
         //mWorkouts contains only the workouts out of the respective recview
-        mSharedPrefs = mContext.getApplicationContext().getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
-        mEditor = mSharedPrefs.edit();
+        SharedPreferences mSharedPrefs = mContext.getApplicationContext().getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPrefs.edit();
         mEditor.apply();
 
         List<Integer> sortedList = new ArrayList<>();
@@ -136,13 +135,13 @@ public class WorkoutListAdapterNew extends RecyclerView.Adapter<WorkoutListAdapt
             View.OnTouchListener,
             GestureDetector.OnGestureListener {
 
-        public final TextView workoutTitle;
-        public final ImageView handleView;
-        onWorkoutListener onWorkoutListener;
-        GestureDetector mGestureDetector;
+        final TextView workoutTitle;
+        final ImageView handleView;
+        final onWorkoutListener onWorkoutListener;
+        final GestureDetector mGestureDetector;
 
 
-        public ItemViewHolder(@NonNull View itemView, onWorkoutListener onWorkoutListener) {
+        ItemViewHolder(@NonNull View itemView, onWorkoutListener onWorkoutListener) {
             super(itemView);
             workoutTitle = itemView.findViewById(R.id.workout_title);
             handleView = itemView.findViewById(R.id.handle);

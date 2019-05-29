@@ -11,7 +11,7 @@ import com.sommerfeld.gymnote.models.Completed;
 @Database(entities = {Completed.class}, version = 1)
 public abstract class CompletedDatabase extends RoomDatabase {
 
-    public static final String DATABASE_NAME = "completed.db";
+    private static final String DATABASE_NAME = "completed.db";
 
     private static CompletedDatabase instance;
 

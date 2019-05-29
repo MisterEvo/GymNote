@@ -37,7 +37,7 @@ public class WorkoutItemTouchHelper extends ItemTouchHelper.Callback {
         saveOrder();
     }
 
-    public void saveOrder() {
+    private void saveOrder() {
         mAdapter.saveOrder();
     }
 

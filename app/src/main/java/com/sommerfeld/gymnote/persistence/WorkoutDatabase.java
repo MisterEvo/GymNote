@@ -11,7 +11,7 @@ import com.sommerfeld.gymnote.models.Workout;
 @Database(entities = {Workout.class}, version = 1)
 public abstract class WorkoutDatabase extends RoomDatabase {
 
-    public static final String DATABASE_NAME = "workouts.db";
+    private static final String DATABASE_NAME = "workouts.db";
 
     private static WorkoutDatabase instance;
 

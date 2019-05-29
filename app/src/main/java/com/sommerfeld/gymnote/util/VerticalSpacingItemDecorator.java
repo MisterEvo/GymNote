@@ -1,11 +1,12 @@
 package com.sommerfeld.gymnote.util;
 
 import android.graphics.Rect;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-public class VerticalSpacingItemDecorator extends RecyclerView.ItemDecoration {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+class VerticalSpacingItemDecorator extends RecyclerView.ItemDecoration {
 
     private final int verticalSpaceHeight;
 

@@ -33,40 +33,22 @@ import java.util.List;
 public class editWorkout extends AppCompatActivity {
     private static final String TAG = "editWorkout";
 
-    public static final String SPINNER_ITEMS = "spinner_items";
-    EditText et_weight;
-    Button btn_add05;
-    Button btn_add0625;
-    Button btn_add1;
-    Button btn_add25;
-    Button btn_sub05;
-    Button btn_sub0625;
-    Button btn_sub1;
-    Button btn_sub25;
-    Button btn_add_rep1;
-    Button btn_add_rep2;
-    Button btn_add_rep3;
-    Button btn_sub_rep1;
-    Button btn_sub_rep2;
-    Button btn_sub_rep3;
-    EditText et_reps1;
-    EditText et_reps2;
-    EditText et_reps3;
-    public static final String PREFS_FILE = "pref_file";
-    //UI
-    Spinner spinner;
-    ImageButton btn_okay;
-
+    private static final String SPINNER_ITEMS = "spinner_items";
+    private static final String PREFS_FILE = "pref_file";
     //vars
-    private ArrayList<Workout> mWorkout = new ArrayList<>();
-    ImageButton btn_cancel;
+    private final ArrayList<Workout> mWorkout = new ArrayList<>();
+    private EditText et_weight;
+    private EditText et_reps1;
+    private EditText et_reps2;
+    private EditText et_reps3;
+    //UI
+    private Spinner spinner;
     private WorkoutRepo mWorkoutRepo;
     private Workout mWorkoutItem;
     private int id;
     private Completed mCompleted;
     private CompletedRepo mCompletedRepo;
-    Button mBtnAddSpinnerItem;
-    ArrayList<String> spinnerEntry = new ArrayList<>();
+    private ArrayList<String> spinnerEntry = new ArrayList<>();
     private SharedPreferences mSharedPrefs;
     private SharedPreferences.Editor mEditor;
 
@@ -118,7 +100,7 @@ public class editWorkout extends AppCompatActivity {
 
     }
 
-    public int findIndex(ArrayList<Workout> WorkoutArr, int t) {
+    private int findIndex(ArrayList<Workout> WorkoutArr, int t) {
         int len = WorkoutArr.size();
         int i = 0;
 
@@ -144,26 +126,26 @@ public class editWorkout extends AppCompatActivity {
         setSupportActionBar(toolbar);
         spinner = findViewById(R.id.spinner_group);
         et_weight = findViewById(R.id.et_d_weight);
-        btn_add05 = findViewById(R.id.btn_add05);
-        btn_add0625 = findViewById(R.id.btn_add0625);
-        btn_add1 = findViewById(R.id.btn_add1);
-        btn_add25 = findViewById(R.id.btn_add25);
-        btn_sub05 = findViewById(R.id.btn_sub05);
-        btn_sub0625 = findViewById(R.id.btn_sub0625);
-        btn_sub1 = findViewById(R.id.btn_sub1);
-        btn_sub25 = findViewById(R.id.btn_sub25);
-        btn_add_rep1 = findViewById(R.id.btn_add_rep1);
-        btn_add_rep2 = findViewById(R.id.btn_add_rep2);
-        btn_add_rep3 = findViewById(R.id.btn_add_rep3);
-        btn_sub_rep1 = findViewById(R.id.btn_sub_rep1);
-        btn_sub_rep2 = findViewById(R.id.btn_sub_rep2);
-        btn_sub_rep3 = findViewById(R.id.btn_sub_rep3);
+        Button btn_add05 = findViewById(R.id.btn_add05);
+        Button btn_add0625 = findViewById(R.id.btn_add0625);
+        Button btn_add1 = findViewById(R.id.btn_add1);
+        Button btn_add25 = findViewById(R.id.btn_add25);
+        Button btn_sub05 = findViewById(R.id.btn_sub05);
+        Button btn_sub0625 = findViewById(R.id.btn_sub0625);
+        Button btn_sub1 = findViewById(R.id.btn_sub1);
+        Button btn_sub25 = findViewById(R.id.btn_sub25);
+        Button btn_add_rep1 = findViewById(R.id.btn_add_rep1);
+        Button btn_add_rep2 = findViewById(R.id.btn_add_rep2);
+        Button btn_add_rep3 = findViewById(R.id.btn_add_rep3);
+        Button btn_sub_rep1 = findViewById(R.id.btn_sub_rep1);
+        Button btn_sub_rep2 = findViewById(R.id.btn_sub_rep2);
+        Button btn_sub_rep3 = findViewById(R.id.btn_sub_rep3);
         et_reps1 = findViewById(R.id.et_RepS1);
         et_reps2 = findViewById(R.id.et_RepS2);
         et_reps3 = findViewById(R.id.et_RepS3);
-        btn_okay = findViewById(R.id.btn_okay);
-        btn_cancel = findViewById(R.id.btn_cancel);
-        mBtnAddSpinnerItem = findViewById(R.id.btn_add_Spinner_item);
+        ImageButton btn_okay = findViewById(R.id.btn_okay);
+        ImageButton btn_cancel = findViewById(R.id.btn_cancel);
+        Button mBtnAddSpinnerItem = findViewById(R.id.btn_add_Spinner_item);
 
         toolbar.setTitle(mWorkoutItem.getExercise());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -418,7 +400,7 @@ public class editWorkout extends AppCompatActivity {
 
     }
 
-    public int findIndex(ArrayList<String> Dropdowns, String item) {
+    private int findIndex(ArrayList<String> Dropdowns, String item) {
 
         int len = Dropdowns.size();
         int i = 0;

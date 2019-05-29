@@ -31,6 +31,7 @@
         android:id="@+id/handle"
         android:layout_weight="24"
         android:scaleType="center"
+        android:contentDescription="@string/handle"
         android:src="@drawable/ic_drag_handle"/>
 
 

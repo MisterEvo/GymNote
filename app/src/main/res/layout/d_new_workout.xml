@@ -51,6 +51,7 @@
         android:layout_marginTop="165dp"
         android:ems="18"
         android:hint="Name"
+        android:autofillHints=""
         android:inputType="textPersonName" />
 
     <EditText
@@ -62,6 +63,7 @@
         android:layout_marginTop="20dp"
         android:ems="18"
         android:hint="Weight"
+        android:autofillHints=""
         android:inputType="numberDecimal" />
 
     <EditText
@@ -74,6 +76,7 @@
         android:ems="3"
         android:hint="Set1"
         android:inputType="number"
+        android:autofillHints=""
         android:textAlignment="center" />
 
     <EditText
@@ -86,6 +89,7 @@
         android:ems="3"
         android:hint="Set2"
         android:inputType="number"
+        android:autofillHints=""
         android:textAlignment="center" />
 
     <EditText
@@ -99,6 +103,7 @@
         android:ems="3"
         android:hint="Set3"
         android:inputType="number"
+        android:autofillHints=""
         android:textAlignment="center" />
 
     <Button
@@ -110,7 +115,7 @@
 
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Ok"
         android:textColor="#ff0000" />
 

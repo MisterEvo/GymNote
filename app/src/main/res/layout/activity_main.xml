@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_marginTop="5dp"
-                android:text="sum"
+                android:text="@string/sum"
                 android:textAlignment="center"
                 android:textSize="37sp"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="Workouts in total"
+                android:text="@string/workouts_in_total"
                 android:textAlignment="center"
                 android:textSize="33sp" />
         </RelativeLayout>
@@ -51,7 +51,7 @@
         <RelativeLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="100dp"
             android:layout_marginEnd="50dp"
             android:background="@color/colorWhite">
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_marginTop="5dp"
-                android:text="last workout"
+                android:text="@string/last_workout"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -71,9 +71,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="Was your last workout group"
+                android:text="@string/was_your_last_workout_group"
                 android:textAlignment="center"
                 android:textSize="23sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="300dp"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/tv_main_total_exercises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_marginTop="5dp"
+                android:text="@string/sum"
+                android:textAlignment="center"
+                android:textSize="37sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/exercises_in_total"
+                android:textAlignment="center"
+                android:textSize="33sp" />
         </RelativeLayout>
 
     </RelativeLayout>

@@ -37,8 +37,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainAct";
-    TextView total_workout;
-    TextView last_workout;
+    private TextView total_workout;
+    private TextView last_workout;
+    private TextView total_exercises;
     private ArrayList<Completed> mCompleteds;
     private CompletedRepo mCompletedRepo;
     public static final int PICKFILE_RESULT_CODE = 1;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         bnw.setSelectedItemId(R.id.ic_dashboard);
         total_workout = findViewById(R.id.tv_main_workout_total);
         last_workout = findViewById(R.id.tv_main_last_workout);
+        total_exercises = findViewById(R.id.tv_main_total_exercises);
 
         retrieveLog();
 
@@ -76,15 +78,18 @@ public class MainActivity extends AppCompatActivity {
                         //Current view
                     case R.id.ic_new_plan:
                         Intent intent_newPlan = new Intent(MainActivity.this, a_workout_overview.class);
+                        intent_newPlan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_newPlan);
                         break;
                     case R.id.ic_workout:
                         Intent intent_log = new Intent(MainActivity.this, CompletedLog.class);
+                        intent_log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_log);
 
                         break;
                     case R.id.ic_analysis:
                         Intent intent_analysis = new Intent(MainActivity.this, graphics.class);
+                        intent_analysis.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_analysis);
                         break;
 
@@ -104,13 +109,21 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (completeds != null) {
                     try {
-                        //TODO: Change total workout counter to real workout days and not number of total exercises
                         mCompleteds.addAll(completeds);
                         String size = String.valueOf(mCompleteds.size());
-                        total_workout.setText(size);
+                        total_exercises.setText(size);
                         if (mCompleteds.size() != 0) {
                             String lastWorkout = mCompleteds.get((mCompleteds.size() - 1)).getTitle();
                             last_workout.setText(lastWorkout);
+
+                            //Fill total_workouts (How many different dates have been placed)
+                            ArrayList<String> dates = new ArrayList<>();
+                            for (Completed completed : mCompleteds) {
+                                if (!dates.contains(completed.getTimestamp())) {
+                                    dates.add(completed.getTimestamp());
+                                }
+                            }
+                            total_workout.setText(String.valueOf(dates.size()));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -193,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private boolean importFiles(String inputFile, String outputFile) {
+    private void importFiles(String inputFile, String outputFile) {
         InputStream in = null;
         OutputStream out = null;
 
@@ -226,11 +239,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
-        return true;
     }
 
 
-    private boolean exportFiles(String inputFile, String outputFile) throws IOException {
+    private void exportFiles(String inputFile, String outputFile) throws IOException {
 
         InputStream in = null;
         OutputStream out = null;
@@ -269,6 +281,5 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "exportFiles: Failed to create folder: " + folder.toPath());
         }
 
-        return true;
     }
 }

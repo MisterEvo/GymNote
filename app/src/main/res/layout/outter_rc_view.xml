@@ -16,6 +16,7 @@
         android:id="@+id/rv_inner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="40dp" />
+        android:paddingStart="30dp"
+        android:paddingEnd="0dp" />
 
 </LinearLayout>

@@ -20,12 +20,10 @@ import static android.content.ContentValues.TAG;
 
 public class LogListAdapter extends RecyclerView.Adapter<LogListAdapter.ViewHolder> implements Filterable {
 
-    ArrayList<Completed> mCompleted = new ArrayList<>();
-    ArrayList<Completed> mCompletedFull;
-
-    private OnLogListener mOnLogListener;
-
-    private Filter CompletedFilter = new Filter() {
+    private final ArrayList<Completed> mCompletedFull;
+    private final OnLogListener mOnLogListener;
+    private ArrayList<Completed> mCompleted = new ArrayList<>();
+    private final Filter CompletedFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Completed> filteredList = new ArrayList<>();
@@ -100,10 +98,12 @@ public class LogListAdapter extends RecyclerView.Adapter<LogListAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView timestamp, exercise, weight;
-        OnLogListener onLogListener;
+        final TextView timestamp;
+        final TextView exercise;
+        final TextView weight;
+        final OnLogListener onLogListener;
 
-        public ViewHolder(@NonNull View itemView, OnLogListener onLogListener) {
+        ViewHolder(@NonNull View itemView, OnLogListener onLogListener) {
             super(itemView);
             timestamp = itemView.findViewById(R.id.tv_timestamp);
             exercise = itemView.findViewById(R.id.tv_Exercise);

@@ -4,4 +4,12 @@
     <string name="workout">Workout</string>
     <string name="analysis">Analysis</string>
     <string name="dashboard">Dashboard</string>
+    <string name="handle">Handle</string>
+    <string name="confirm">Confirm</string>
+    <string name="abort">abort</string>
+    <string name="sum">sum</string>
+    <string name="workouts_in_total">Workouts in total</string>
+    <string name="last_workout">last workout</string>
+    <string name="was_your_last_workout_group">Was your last workout group</string>
+    <string name="exercises_in_total">Exercises in total</string>
 </resources>

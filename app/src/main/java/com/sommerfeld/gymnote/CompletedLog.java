@@ -47,7 +47,7 @@ public class CompletedLog extends AppCompatActivity implements LogListAdapter.On
     private ArrayList<Completed> mCompleteds;
     private LogListAdapter mLogListAdapter;
     private CompletedRepo mCompletedRepo;
-    private ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    private final ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -90,19 +90,23 @@ public class CompletedLog extends AppCompatActivity implements LogListAdapter.On
                 switch (menuItem.getItemId()) {
                     case R.id.ic_dashboard:
                         Intent intent_Dashboard = new Intent(CompletedLog.this, MainActivity.class);
+                        intent_Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_Dashboard);
                         break;
                     case R.id.ic_new_plan:
                         Intent intent_newPlan = new Intent(CompletedLog.this, a_workout_overview.class);
+                        intent_newPlan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_newPlan);
                         break;
                     case R.id.ic_workout:
                         Intent intent_log = new Intent(CompletedLog.this, CompletedLog.class);
+                        intent_log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_log);
 
                         break;
                     case R.id.ic_analysis:
                         Intent intent_analysis = new Intent(CompletedLog.this, graphics.class);
+                        intent_analysis.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_analysis);
                         break;
 
@@ -245,7 +249,7 @@ public class CompletedLog extends AppCompatActivity implements LogListAdapter.On
         });
     }
 
-    public int findIndex(ArrayList<Completed> CompletedArr, int t) {
+    private int findIndex(ArrayList<Completed> CompletedArr, int t) {
         int len = CompletedArr.size();
         int i = 0;
 

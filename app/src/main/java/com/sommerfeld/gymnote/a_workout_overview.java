@@ -11,8 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -38,7 +36,6 @@ import com.google.gson.reflect.TypeToken;
 import com.sommerfeld.gymnote.adapters.OutterListAdapter;
 import com.sommerfeld.gymnote.models.Workout;
 import com.sommerfeld.gymnote.persistence.WorkoutRepo;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,38 +44,22 @@ public class a_workout_overview extends AppCompatActivity {
 
     private static final String TAG = "a_workout_overview";
 
-    //UI Components
-    private RecyclerView mRecyclerview;
-    FloatingActionButton fab;
-    Button mBtnOk;
-    Button mBtnCancel;
-    public static final String SPINNER_ITEMS = "spinner_items";
-    EditText mEtName;
-    EditText mEtWeight;
-    EditText mEtSet1;
-    EditText mEtSet2;
-    EditText mEtSet3;
-    Button mBtnAddSpinnerItem;
+    private static final String SPINNER_ITEMS = "spinner_items";
+    private static final String PREFS_FILE = "pref_file";
+    private final ArrayList<Workout> mWorkoutTemp = new ArrayList<>();
+    private Button mBtnOk;
+    private EditText mEtName;
+    private EditText mEtWeight;
+    private EditText mEtSet1;
 
     //Vars
     private ArrayList<Workout> mWorkout = new ArrayList<>();
-    private ArrayList<Workout> mWorkoutTemp = new ArrayList<>();
-    Spinner mSpinner;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private EditText mEtSet2;
+    private EditText mEtSet3;
     private ItemTouchHelper mItemTouchHelper;
     private WorkoutRepo mWorkoutRepo;
     private Workout mWorkoutItem;
-    ArrayList<String> spinnerEntry = new ArrayList<>();
-
-    private SharedPreferences mSharedPrefs;
-    private SharedPreferences.Editor mEditor;
-    public static final String LIST_SORTED_DATA_ID = "json_list_sorted_data_id";
-    private OutterListAdapter mAdapter;
-    public static final String PREFS_FILE = "pref_file";
-
-
-
-    private TextWatcher addTextWatcher = new TextWatcher() {
+    private final TextWatcher addTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -86,10 +67,10 @@ public class a_workout_overview extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (!TextUtils.isEmpty(mEtName.getText()) && !TextUtils.isEmpty(mEtWeight.getText()) && !TextUtils.isEmpty(mEtSet1.getText()) && !TextUtils.isEmpty(mEtSet2.getText()) && !TextUtils.isEmpty(mEtSet3.getText())) {
-                mBtnOk.setTextColor(getApplication().getResources().getColor(R.color.colorRed));
+                mBtnOk.setTextColor(ContextCompat.getColor(a_workout_overview.this, R.color.colorRed));
                 mBtnOk.setEnabled(true);
             } else {
-                mBtnOk.setTextColor(getApplication().getResources().getColor(R.color.colorDarkGrey));
+                mBtnOk.setTextColor(ContextCompat.getColor(a_workout_overview.this, R.color.colorDarkGrey));
                 mBtnOk.setEnabled(false);
             }
         }
@@ -98,6 +79,13 @@ public class a_workout_overview extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
         }
     };
+
+    private SharedPreferences mSharedPrefs;
+    private SharedPreferences.Editor mEditor;
+    public static final String LIST_SORTED_DATA_ID = "json_list_sorted_data_id";
+    private OutterListAdapter mAdapter;
+    private Spinner mSpinner;
+    private ArrayList<String> spinnerEntry = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +96,7 @@ public class a_workout_overview extends AppCompatActivity {
         mEditor = mSharedPrefs.edit();
         mEditor.apply();
 
-        fab = findViewById(R.id.fab_add);
+        FloatingActionButton fab = findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +126,7 @@ public class a_workout_overview extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.ic_dashboard:
                         Intent intent_Dashboard = new Intent(a_workout_overview.this, MainActivity.class);
+                        intent_Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_Dashboard);
                         break;
                     case R.id.ic_new_plan:
@@ -145,11 +134,13 @@ public class a_workout_overview extends AppCompatActivity {
                         break;
                     case R.id.ic_workout:
                         Intent intent_log = new Intent(a_workout_overview.this, CompletedLog.class);
+                        intent_log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_log);
 
                         break;
                     case R.id.ic_analysis:
                         Intent intent_analysis = new Intent(a_workout_overview.this, graphics.class);
+                        intent_analysis.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_analysis);
                         break;
 
@@ -160,13 +151,13 @@ public class a_workout_overview extends AppCompatActivity {
 
     }
 
-    public void openDialog() {
+    private void openDialog() {
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(a_workout_overview.this);
         final View mView = getLayoutInflater().inflate(R.layout.d_new_workout, null);
         mSpinner = mView.findViewById(R.id.spinner_group);
         mBtnOk = mView.findViewById(R.id.btn_okay);
-        mBtnCancel = mView.findViewById(R.id.btn_cancel);
-        mBtnAddSpinnerItem = mView.findViewById(R.id.btn_add_Spinner_item);
+        Button mBtnCancel = mView.findViewById(R.id.btn_cancel);
+        Button mBtnAddSpinnerItem = mView.findViewById(R.id.btn_add_Spinner_item);
         mEtName = mView.findViewById(R.id.et_name);
         mEtWeight = mView.findViewById(R.id.et_weight);
         mEtSet1 = mView.findViewById(R.id.et_repsS1);
@@ -290,9 +281,10 @@ public class a_workout_overview extends AppCompatActivity {
 
 
     private void initRecyclerView() {
-        mRecyclerview = findViewById(R.id.recyclerView);
+        //UI Components
+        RecyclerView mRecyclerview = findViewById(R.id.recyclerView);
         mRecyclerview.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerview.setLayoutManager(mLayoutManager);
 
         ArrayList<String> GroupArray = new ArrayList<>();
@@ -307,68 +299,9 @@ public class a_workout_overview extends AppCompatActivity {
 
         //setup Adapter with empty list
         mAdapter = new OutterListAdapter(this, GroupArray, mWorkout, mWorkoutRepo);
-        mRecyclerview.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this)
-                .colorResId(R.color.colorPrimaryDark).size(2).build());
+
         mRecyclerview.setAdapter(mAdapter);
 
     }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.overview_toolbar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save_Order:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-//        private ArrayList<Workout> getSortedData () {
-//            ArrayList<Workout> sortedWorkout = new ArrayList<>();
-//
-//            String jsonListOfSortedWorkoutId = mSharedPrefs.getString(LIST_SORTED_DATA_ID, "");
-//
-//            if (!jsonListOfSortedWorkoutId.isEmpty()) {
-//                Gson gson = new Gson();
-//                List<Integer> listOfSortedWorkout = gson.fromJson(jsonListOfSortedWorkoutId, new TypeToken<List<Integer>>() {
-//                }.getType());
-//                Log.d(TAG, "getSortedData: Decrypted JSON: " + listOfSortedWorkout);
-//
-//                //build sorted list
-//                if (listOfSortedWorkout != null && listOfSortedWorkout.size() > 0) {
-//
-//                    for (int id : listOfSortedWorkout) {
-//                        for (Workout workout : mWorkoutTemp) {
-//                            if (workout.getId() == id) {
-//                                sortedWorkout.add(workout);
-//                                mWorkoutTemp.remove(workout);
-//                                break;
-//                            }
-//                        }
-//                    }
-//
-//                }
-//
-//                if (mWorkoutTemp.size() > 0) {
-//                    sortedWorkout.addAll(mWorkoutTemp);
-//                }
-//                Log.d(TAG, "getSortedData: SortedList: " + sortedWorkout);
-//                return sortedWorkout;
-//
-//            } else {
-//                return mWorkoutTemp;
-//            }
-//
-//        }
-
 }
 

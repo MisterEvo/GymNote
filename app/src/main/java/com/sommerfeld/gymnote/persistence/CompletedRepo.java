@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CompletedRepo {
 
-    private CompletedDatabase mCompletedDatabase;
+    private final CompletedDatabase mCompletedDatabase;
 
     public CompletedRepo(Context context) {
         mCompletedDatabase = CompletedDatabase.getInstance(context);

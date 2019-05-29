@@ -33,8 +33,8 @@ public class graphics extends AppCompatActivity {
 
     private static final String TAG = "graphics";
     //UI
-    LineChart chart;
-    Spinner mSpinner;
+    private LineChart chart;
+    private Spinner mSpinner;
 
     //Vars
     private ArrayList<Completed> mCompleteds;
@@ -62,14 +62,17 @@ public class graphics extends AppCompatActivity {
 
                     case R.id.ic_dashboard:
                         Intent intent_Dashboard = new Intent(graphics.this, MainActivity.class);
+                        intent_Dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_Dashboard);
                         break;
                     case R.id.ic_new_plan:
                         Intent intent_newPlan = new Intent(graphics.this, a_workout_overview.class);
+                        intent_newPlan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_newPlan);
                         break;
                     case R.id.ic_workout:
                         Intent intent_log = new Intent(graphics.this, CompletedLog.class);
+                        intent_log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent_log);
 
                         break;
@@ -136,7 +139,7 @@ public class graphics extends AppCompatActivity {
 
     }
 
-    public ArrayList<Completed> loadSpecificArray(String exercise) {
+    private ArrayList<Completed> loadSpecificArray(String exercise) {
         ArrayList<Completed> SpecificArray = new ArrayList<>();
         for (Completed item : mCompleteds) {
             if (item.getExercise().equals(exercise)) {
@@ -164,7 +167,7 @@ public class graphics extends AppCompatActivity {
         chart.invalidate();
     }
 
-    public int findIndex(ArrayList<Completed> CompletedArr, float t) {
+    private int findIndex(ArrayList<Completed> CompletedArr, float t) {
         int len = CompletedArr.size();
         int i = 0;
 
@@ -180,7 +183,7 @@ public class graphics extends AppCompatActivity {
     }
 
     private class MyAxisValueFormatter implements IAxisValueFormatter {
-        ArrayList<Completed> specifics = loadSpecificArray(mSpinner.getSelectedItem().toString());
+        final ArrayList<Completed> specifics = loadSpecificArray(mSpinner.getSelectedItem().toString());
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {

@@ -24,6 +24,7 @@
         android:layout_marginTop="50dp"
         android:ems="18"
         android:hint="Group Name"
+        android:autofillHints=""
         android:inputType="textPersonName" />
 
     <Button
@@ -32,7 +33,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_spinner_item_name"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:text="Ok"
@@ -45,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_spinner_item_name"
         android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@id/btn_okay"
+        android:layout_toLeftOf="@id/btn_spinner_okay"
         android:text="Cancel"
         android:textColor="#ff0000" />
 
